@@ -21,6 +21,8 @@ ACCESS_KEY_NAME = 'AWS_ACCESS_KEY_ID'
 SECRET_KEY_NAME = 'AWS_SECRET_ACCESS_KEY'
 HEADERS = 'AWS_HEADERS'
 
+# TODO: Allow this to be overridden by the project settings
+DEFAULT_ACL = 'public-read'
 
 class S3Storage(Storage):
     """Amazon Simple Storage Service"""
@@ -121,7 +123,8 @@ class S3Storage(Storage):
         content_length = len(content.read())
         headers.update({
             'Content-Type': content_type,
-            'Content-Length': str(content_length)
+            'Content-Length': str(content_length),
+            'x-amz-acl': DEFAULT_ACL
         })
         content.seek(0)
         # Httplib in <= 2.6 doesn't accept file like objects, and in >= 2.7 it
