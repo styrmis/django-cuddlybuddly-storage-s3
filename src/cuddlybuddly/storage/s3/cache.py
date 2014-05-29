@@ -2,7 +2,12 @@ import os
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.encoding import smart_str
-from django.utils.hashcompat import md5_constructor
+
+try:
+    # for django 1.6
+    from hashlib import md5 as md5_constructor
+except:
+    from django.utils.hashcompat import md5_constructor
 
 
 class Cache(object):
